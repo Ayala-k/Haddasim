@@ -1,0 +1,26 @@
+const accessDatabase = require('./dbConnection').accessDatabase;
+
+async function viewAllManufacturers() {
+    let sql = `SELECT * FROM manufacturers_table`;
+    return accessDatabase(sql);
+}
+
+async function viewManufacturer(id) {
+    let sql = `SELECT * FROM manufacturers_table WHERE manufacturer_id=${id}`;
+    let patientDetails = await accessDatabase(sql);
+    if (patientDetails.length == 0)
+        throw ({ status: 404, message: "Manufacturer not found" })
+    return patientDetails[0];
+}
+
+async function addManufacturer(details) {
+    let sql = `INSERT INTO manufacturers_table (manufacturer_id,manufacturer_name) 
+     VALUES (${details.manufacturerId},'${details.manufacturerName}');`;
+    return accessDatabase(sql);
+}
+
+module.exports={
+    viewAllManufacturers,
+    viewManufacturer,
+    addManufacturer
+}

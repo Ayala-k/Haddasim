@@ -1,0 +1,62 @@
+
+---corona---
+localhost:3001/corona/viewAllCorona
+localhost:3001/corona/viewCoronaOfPatient
+{
+"patientId":"111111111"
+}
+localhost:3001/corona/addCorona
+{
+   "patientId":"111111111",
+   "positiveResultDate":"23.04.10",
+   "recoveryDate":"23.04.20"
+}
+
+
+---manufacturers---
+localhost:3001/manufacturers/viewAllManufacturers
+localhost:3001/manufacturers/viewManufacturer
+{
+"manufacturerId":"333"
+}
+localhost:3001/manufacturers/addManufacturer
+{
+   "manufacturerId":"336",
+   "manufacturerName":"M336"
+}
+
+
+---patients---
+localhost:3001/patients/viewAllPatients
+localhost:3001/patients/viewPatient
+{
+"patientId":"111111111"
+}
+localhost:3001/patients/addPatient
+{
+    "id": "444444444",
+    "name":"P4",
+    "address":"P44",
+    "dateOfBirth":"21.04.15",
+    "phoneNumber":"444444444",
+    "cellphoneNumber":"444444444"
+}
+
+
+---vaccinations---
+localhost:3001/vaccinations/viewAllVaccinations
+localhost:3001/vaccinations/viewVaccinationsOfPatient
+{
+"patientId":"111111111"
+}
+localhost:3001/vaccinations/addVaccination
+{
+"patientId":"111111111",
+"manufacturerId":"333",
+"vaccinationDate":"12.02.04"
+}
+
+
+---bonus---
+localhost:3001/corona/getLastMonthCorona
+localhost:3001/vaccinations/getNumberOfNotVaccinated

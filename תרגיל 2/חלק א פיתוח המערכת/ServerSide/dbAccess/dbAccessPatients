@@ -1,0 +1,28 @@
+const accessDatabase = require('./dbConnection').accessDatabase;
+
+async function viewAllPatients() {
+    let sql = `SELECT * FROM patients_table`;
+    return accessDatabase(sql);
+}
+
+async function viewPatient(id) {
+    let sql = `SELECT * FROM patients_table WHERE patient_id=${id}`;
+    let patientDetails = await accessDatabase(sql);
+    if (patientDetails.length == 0)
+        throw ({ status: 404, message: "Patient not found" })
+    return patientDetails[0];
+}
+
+async function addPatient(patientDetails) {
+    let sql = `INSERT INTO patients_table (patient_id, patient_name, patient_address, 
+        patients_date_of_birth, patient_phone_number, patient_celphone_number) 
+     VALUES (${patientDetails.id}, '${patientDetails.name}', '${patientDetails.address}',
+     '${patientDetails.dateOfBirth}', ${patientDetails.phoneNumber},${patientDetails.cellphoneNumber})`;
+    return accessDatabase(sql);
+}
+
+module.exports = {
+    viewAllPatients,
+    viewPatient,
+    addPatient
+}

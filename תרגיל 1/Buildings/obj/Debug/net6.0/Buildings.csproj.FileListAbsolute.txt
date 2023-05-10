@@ -1,0 +1,15 @@
+D:\Buildings\bin\Debug\net6.0\Buildings.exe
+D:\Buildings\bin\Debug\net6.0\Buildings.deps.json
+D:\Buildings\bin\Debug\net6.0\Buildings.runtimeconfig.json
+D:\Buildings\bin\Debug\net6.0\Buildings.dll
+D:\Buildings\bin\Debug\net6.0\Buildings.pdb
+D:\Buildings\obj\Debug\net6.0\Buildings.csproj.AssemblyReference.cache
+D:\Buildings\obj\Debug\net6.0\Buildings.GeneratedMSBuildEditorConfig.editorconfig
+D:\Buildings\obj\Debug\net6.0\Buildings.AssemblyInfoInputs.cache
+D:\Buildings\obj\Debug\net6.0\Buildings.AssemblyInfo.cs
+D:\Buildings\obj\Debug\net6.0\Buildings.csproj.CoreCompileInputs.cache
+D:\Buildings\obj\Debug\net6.0\Buildings.dll
+D:\Buildings\obj\Debug\net6.0\refint\Buildings.dll
+D:\Buildings\obj\Debug\net6.0\Buildings.pdb
+D:\Buildings\obj\Debug\net6.0\Buildings.genruntimeconfig.cache
+D:\Buildings\obj\Debug\net6.0\ref\Buildings.dll

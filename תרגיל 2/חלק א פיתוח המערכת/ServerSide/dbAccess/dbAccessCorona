@@ -1,0 +1,44 @@
+const accessDatabase = require('./dbConnection').accessDatabase;
+
+async function viewAllCorona() {
+    let sql = `SELECT * FROM corona_table`;
+    return accessDatabase(sql);
+}
+
+async function viewCoronaOfPatient(patientId) {
+    let sql = `SELECT * FROM corona_table WHERE patient_id=${patientId}`;
+    let patientDetails = await accessDatabase(sql);
+    if (patientDetails.length == 0)
+        throw ({ status: 404, message: "Corona case not found" })
+    return patientDetails;
+}
+
+async function addCorona(details) {
+    let sql = `INSERT INTO corona_table (patient_id, positive_result_date,recovery_date)
+    VALUES (${details.patientId},'${details.positiveResultDate}','${details.recoveryDate}')`
+    return await accessDatabase(sql)
+}
+
+async function getLastMonthCorona() {
+    let sql = `SELECT date, count(patient_id) as result
+    FROM corona_table RIGHT JOIN
+    (SELECT DATE_FORMAT(date_sub(CURRENT_DATE, INTERVAL 1 MONTH), '%Y-%m-%d') + INTERVAL n.n DAY AS date
+    FROM (
+       SELECT a.N + b.N * 10 + c.N * 100 AS n
+       FROM (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS a
+       CROSS JOIN (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS b
+       CROSS JOIN (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS c
+    ) n
+    WHERE DATE_FORMAT(date_sub(CURRENT_DATE, INTERVAL 1 MONTH), '%Y-%m-%d') + INTERVAL n.n DAY <= CURRENT_DATE) T
+    ON date>=positive_result_date AND date<=recovery_date
+    GROUP BY date
+    ORDER BY date;`
+    return await accessDatabase(sql)
+}
+
+module.exports = {
+    viewAllCorona,
+    viewCoronaOfPatient,
+    addCorona,
+    getLastMonthCorona
+}

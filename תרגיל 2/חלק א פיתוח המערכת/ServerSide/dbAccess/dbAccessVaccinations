@@ -1,0 +1,34 @@
+const accessDatabase = require('./dbConnection').accessDatabase;
+
+async function viewAllVaccinations() {
+    let sql = `SELECT * FROM vaccinations_table`;
+    return accessDatabase(sql);
+}
+
+async function viewVaccinationsOfPatient(patientId) {
+    let sql = `SELECT * FROM vaccinations_table WHERE patient_id=${patientId}`;
+    let patientDetails = await accessDatabase(sql);
+    if (patientDetails.length == 0)
+        throw ({ status: 404, message: "Vaccinations not found" })
+    return patientDetails;
+}
+
+async function addVaccination(details) {
+    if ((await accessDatabase(`SELECT * from vaccinations_table WHERE patient_id=${details.patientId}`).length == 4))
+        throw ({ status: 400, message: "Exceeded the vaccination quota" })
+    let sql = `INSERT INTO vaccinations_table (patient_id, manufacturer_id, vaccination_date)
+     VALUES (${details.patientId}, ${details.manufacturerId}, '${details.vaccinationDate}');`;
+    return await accessDatabase(sql)
+}
+
+async function getNumberOfNotVaccinated() {
+    let sql = `SELECT count(*) AS result FROM patients_table WHERE patient_id NOT IN (SELECT patient_id FROM vaccinations_table)`
+    return (await accessDatabase(sql))[0];
+}
+
+module.exports = {
+    viewAllVaccinations,
+    viewVaccinationsOfPatient,
+    addVaccination,
+    getNumberOfNotVaccinated
+}
